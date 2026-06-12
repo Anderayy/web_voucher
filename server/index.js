@@ -1,10 +1,15 @@
 import cors from "cors";
 import express from "express";
 import { nanoid } from "nanoid";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { articles, categories, vouchers } from "./data.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const distPath = path.join(__dirname, "..", "dist");
 
 app.use(cors());
 app.use(express.json());
@@ -242,6 +247,12 @@ app.delete("/api/admin/vouchers/:id", (req, res) => {
 
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ message: err.message || "Terjadi kesalahan server" });
+});
+
+app.use(express.static(distPath));
+
+app.get(/^(?!\/api).*/, (_req, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
 });
 
 app.listen(PORT, () => {

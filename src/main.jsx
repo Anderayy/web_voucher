@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import "./styles.css";
 
-const API_BASE = "http://localhost:4000/api";
+const API_BASE = "/api";
 const imageFallback =
   "https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=900&q=80";
 
